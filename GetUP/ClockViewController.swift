@@ -25,7 +25,6 @@ class ClockViewController: UIViewController  {
         // Do any additional setup after loading the view, typically from a nib.
         Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.displayTime), userInfo: nil, repeats: true)
         datePicker.setValue(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), forKey: "textColor")
-        //        datePicker.minuteInterval = 5
         let lc = NSLocale.autoupdatingCurrent
         datePicker.locale = lc
         datePicker.calendar = Calendar.autoupdatingCurrent

@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AVAudioPlayerDelegate , 
         //        print("app will resing")
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-        if let alarmsTVC = window?.rootViewController?.childViewControllers[0].childViewControllers.first as? AlarmsTableViewController {
+        if let alarmsTVC = window?.rootViewController?.children[0].children.first as? AlarmsTableViewController {
             alarmScheduler.alarms = alarmsTVC.alarmArrayForAlarmTVC
             //            print(alarmScheduler.alarms)
             if alarmsTVC.alarmsToRemove.isEmpty == false {
@@ -44,16 +44,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AVAudioPlayerDelegate , 
     func applicationWillEnterForeground(_ application: UIApplication) {
         //        print("Application will enter foreground")
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        if let alarmsTVC = window?.rootViewController?.childViewControllers[0].childViewControllers.first as? AlarmsTableViewController {
+        if let alarmsTVC = window?.rootViewController?.children[0].children.first as? AlarmsTableViewController {
             alarmsTVC.alarmArrayForAlarmTVC = alarmScheduler.alarms
             print("alarms set from sceduler to tvc")
             alarmsTVC.update()
         }
     }
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         //        print("app WILL finish launching")
         ///Assigning the scheduler delegate in AlarmsTableViewController
-        if let alarmsTVC = window?.rootViewController?.childViewControllers[0].childViewControllers.first as? AlarmsTableViewController {
+        if let alarmsTVC = window?.rootViewController?.children[0].children.first as? AlarmsTableViewController {
             alarmsTVC.alarmArrayForAlarmTVC = alarmScheduler.alarms
             alarmsTVC.scheduler = alarmScheduler
             //            print("alarms set from scheduler to TVC and also scheduler set")
@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AVAudioPlayerDelegate , 
         //        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         //        print("app did finish launching")
         //create the notificationCenter
         let category = UNNotificationCategory(identifier: "GetUpAlarmApp", actions: [], intentIdentifiers: [], options: .customDismissAction)
@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AVAudioPlayerDelegate , 
         }
         //        application.registerForRemoteNotifications()
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .defaultToSpeaker)
         } catch let error {
             print("problem with audio set session Error : \(error.localizedDescription)")
         }
@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AVAudioPlayerDelegate , 
             alarmScheduler.alarms.remove(at: index)
             alarmScheduler.scheduledNotificationIDs.remove(at: alarmScheduler.scheduledNotificationIDs.index(of: alarm.id)!)
         }
-        if let alarmVTC = window?.rootViewController?.childViewControllers[0].childViewControllers[0]as? AlarmsTableViewController {
+        if let alarmVTC = window?.rootViewController?.children[0].children[0]as? AlarmsTableViewController {
             if let indexInVC = alarmVTC.alarmArrayForAlarmTVC.index(of: alarm){
                 alarmVTC.alarmArrayForAlarmTVC.remove(at: indexInVC)
             }
@@ -129,7 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AVAudioPlayerDelegate , 
             alarmScheduler.alarms.remove(at: index)
             alarmScheduler.scheduledNotificationIDs.remove(at: alarmScheduler.scheduledNotificationIDs.index(of: alarm.id)!)
         }
-        if let alarmVTC = window?.rootViewController?.childViewControllers[0].childViewControllers[0] as? AlarmsTableViewController {
+        if let alarmVTC = window?.rootViewController?.children[0].children[0] as? AlarmsTableViewController {
             if let indexInVC = alarmVTC.alarmArrayForAlarmTVC.index(of: alarm){
                 alarmVTC.alarmArrayForAlarmTVC.remove(at: indexInVC)
             }

@@ -32,7 +32,7 @@ class AlarmScheduler : AlarmSchedulerDelegate {
             let content = UNMutableNotificationContent()
             content.title = "Wake UP!!!"
             content.body = "Think you're ready to get up?"
-            content.sound = UNNotificationSound.default()
+            content.sound = UNNotificationSound.default
             let dateinfo = appCalender.dateComponents([.year,.day,.hour,.minute,.month,.timeZone,.calendar], from: alarm.getAlarmTime())
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateinfo, repeats: false)
             let request = UNNotificationRequest(identifier: alarm.id, content: content, trigger: trigger)
