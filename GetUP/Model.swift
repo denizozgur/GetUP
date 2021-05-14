@@ -51,7 +51,7 @@ class AlarmScheduler : AlarmSchedulerDelegate {
         let alarmIDs = alarm.map({$0.id})
         currentUserNotificationCenter.removePendingNotificationRequests(withIdentifiers: alarmIDs)
         for id in alarmIDs {
-            if let index = scheduledNotificationIDs.index(of: id) {
+            if let index = scheduledNotificationIDs.firstIndex(of: id) {
                 scheduledNotificationIDs.remove(at: index)
             }
         }
@@ -70,7 +70,7 @@ class AlarmScheduler : AlarmSchedulerDelegate {
             print("syncing")
             for alarm in alarms {
                 if alarm.active == false {
-                    alarms.remove(at: alarms.index(of: alarm)!)
+                    alarms.remove(at: alarms.firstIndex(of: alarm)!)
                 }
                 if scheduledNotificationIDs.contains(alarm.id) == false {
                     createRequestAndSetAlarm(alarm)
@@ -88,25 +88,22 @@ protocol AlarmSchedulerDelegate{
 }
 
 /// Alarm Struct
-class Alarm : Hashable , Comparable{
+class Alarm : Comparable{
     
     private var alarmTime : Date
     var active :Bool
     let id : String
-    let hashValue: Int
     
     init(time new : Date) {
         alarmTime = new
         active = true
         id = UUID().uuidString
-        hashValue = UUID().hashValue
     }
     
     init(notification : UNNotificationRequest) {
         id = notification.identifier
         alarmTime = notification.getFiringDateFromRequest()
         active = true
-        hashValue = UUID().hashValue
     }
     
     func getAlarmTime() -> Date {
@@ -114,7 +111,7 @@ class Alarm : Hashable , Comparable{
     }
     
     static func ==(lhs: Alarm, rhs: Alarm) -> Bool {
-        if lhs.id == rhs.id || lhs.hashValue == rhs.hashValue {
+        if lhs.id == rhs.id {
             return true
         }
         return false

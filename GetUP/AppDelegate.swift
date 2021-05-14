@@ -106,12 +106,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AVAudioPlayerDelegate , 
         //        // custom code to handle push while app is in the foreground
         //        print("\(notification.request.content)")
         let alarm = notification.request.getAlarmFromNotificationRequest()
-        if let index = alarmScheduler.alarms.index(of: alarm) {
+        if let index = alarmScheduler.alarms.firstIndex(of: alarm) {
             alarmScheduler.alarms.remove(at: index)
-            alarmScheduler.scheduledNotificationIDs.remove(at: alarmScheduler.scheduledNotificationIDs.index(of: alarm.id)!)
+            alarmScheduler.scheduledNotificationIDs.remove(at: alarmScheduler.scheduledNotificationIDs.firstIndex(of: alarm.id)!)
         }
         if let alarmVTC = window?.rootViewController?.children[0].children[0]as? AlarmsTableViewController {
-            if let indexInVC = alarmVTC.alarmArrayForAlarmTVC.index(of: alarm){
+            if let indexInVC = alarmVTC.alarmArrayForAlarmTVC.firstIndex(of: alarm){
                 alarmVTC.alarmArrayForAlarmTVC.remove(at: indexInVC)
             }
         }
@@ -125,12 +125,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , AVAudioPlayerDelegate , 
     {
         //Response object has information about the action user did for notification
         let alarm = response.notification.request.getAlarmFromNotificationRequest()
-        if let index = alarmScheduler.alarms.index(of: alarm) {
+        if let index = alarmScheduler.alarms.firstIndex(of: alarm) {
             alarmScheduler.alarms.remove(at: index)
-            alarmScheduler.scheduledNotificationIDs.remove(at: alarmScheduler.scheduledNotificationIDs.index(of: alarm.id)!)
+            alarmScheduler.scheduledNotificationIDs.remove(at: alarmScheduler.scheduledNotificationIDs.firstIndex(of: alarm.id)!)
         }
         if let alarmVTC = window?.rootViewController?.children[0].children[0] as? AlarmsTableViewController {
-            if let indexInVC = alarmVTC.alarmArrayForAlarmTVC.index(of: alarm){
+            if let indexInVC = alarmVTC.alarmArrayForAlarmTVC.firstIndex(of: alarm){
                 alarmVTC.alarmArrayForAlarmTVC.remove(at: indexInVC)
             }
         }
